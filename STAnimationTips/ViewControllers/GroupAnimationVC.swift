@@ -23,7 +23,6 @@ class GroupAnimationVC: UIViewController {
         
         blackView.frame = CGRect(x: 20, y: 200, width: 100, height: 100)
         blackView.backgroundColor = UIColor.blackColor()
-//        blackView.layer.transform = CATransform3DMakeScale(0.5, 0.5, 0.5)
         view.addSubview(blackView)
         
         orangeView.frame = CGRect(x: CGRectGetWidth(UIScreen.mainScreen().bounds) - 120, y: 200, width: 100, height: 100)
