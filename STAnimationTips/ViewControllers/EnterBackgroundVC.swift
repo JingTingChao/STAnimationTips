@@ -11,11 +11,29 @@ import UIKit
 class EnterBackgroundVC: UIViewController {
 
     @IBOutlet weak var label: UILabel!
+    let RotateAnimationKey = "rotateAnimation"
+    var rotateAnimation: CAAnimation?
     
     override func viewDidLoad() {
         super.viewDidLoad()
 
         // Do any additional setup after loading the view.
+        setupNotification()
+    }
+    
+    private func setupNotification() {
+        NSNotificationCenter.defaultCenter().addObserver(self, selector: "applicationWillEnterForegroundNotification", name: UIApplicationWillEnterForegroundNotification, object: nil)
+        NSNotificationCenter.defaultCenter().addObserver(self, selector: "applicationDidEnterBackgroundNotification", name: UIApplicationDidEnterBackgroundNotification, object: nil)
+    }
+    
+    func applicationWillEnterForegroundNotification() {
+        if let rotateAnimation = rotateAnimation {
+            label.layer.addAnimation(rotateAnimation, forKey: RotateAnimationKey)
+        }
+    }
+    
+    func applicationDidEnterBackgroundNotification() {
+        rotateAnimation = label.layer.animationForKey(RotateAnimationKey)
     }
     
     @IBAction func buttonTapped(sender: UIButton) {
@@ -29,6 +47,6 @@ extension EnterBackgroundVC {
         rotateAnimation.toValue = 2.0 * M_PI
         rotateAnimation.repeatCount = Float.infinity
         rotateAnimation.duration = 2
-        label.layer.addAnimation(rotateAnimation, forKey: "rotateAnimation")
+        label.layer.addAnimation(rotateAnimation, forKey: RotateAnimationKey)
     }
 }
