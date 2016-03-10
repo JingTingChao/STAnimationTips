@@ -14,11 +14,18 @@ class EnterBackgroundVC: UIViewController {
     let RotateAnimationKey = "rotateAnimation"
     var rotateAnimation: CAAnimation?
     
+    @IBOutlet weak var imageView: UIImageView!
+    
     override func viewDidLoad() {
         super.viewDidLoad()
 
         // Do any additional setup after loading the view.
-        setupNotification()
+//        setupNotification()
+        
+        
+        
+        imageView.animationDuration = 100
+//        imageView.animationImages = 
     }
     
     private func setupNotification() {
@@ -30,14 +37,32 @@ class EnterBackgroundVC: UIViewController {
         if let rotateAnimation = rotateAnimation {
             label.layer.addAnimation(rotateAnimation, forKey: RotateAnimationKey)
         }
+        rotateAnimation = nil
     }
-    
+
     func applicationDidEnterBackgroundNotification() {
         rotateAnimation = label.layer.animationForKey(RotateAnimationKey)
     }
     
     @IBAction func buttonTapped(sender: UIButton) {
         startAnimation()
+    }
+}
+
+extension EnterBackgroundVC {
+    private func pauseLayer() {
+        let pausedTime = label.layer.convertTime(CACurrentMediaTime(), fromLayer: nil)
+        label.layer.speed = 0.0
+        label.layer.timeOffset = pausedTime
+    }
+
+    private func resumeLayer() {
+        let pausedTime = label.layer.timeOffset
+        label.layer.speed = 1.0;
+        label.layer.timeOffset = 0.0;
+        label.layer.beginTime = 0.0;
+        let timeSincePause = label.layer.convertTime(CACurrentMediaTime(), fromLayer: nil) - pausedTime
+        label.layer.beginTime = timeSincePause;
     }
 }
 
