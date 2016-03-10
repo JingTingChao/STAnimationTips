@@ -14,8 +14,6 @@ class EnterBackgroundVC: UIViewController {
     let RotateAnimationKey = "rotateAnimation"
     var rotateAnimation: CAAnimation?
     
-    @IBOutlet weak var imageView: UIImageView!
-    
     override func viewDidLoad() {
         super.viewDidLoad()
 
