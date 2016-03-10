@@ -20,12 +20,7 @@ class EnterBackgroundVC: UIViewController {
         super.viewDidLoad()
 
         // Do any additional setup after loading the view.
-//        setupNotification()
-        
-        
-        
-        imageView.animationDuration = 100
-//        imageView.animationImages = 
+        setupNotification()
     }
     
     private func setupNotification() {
